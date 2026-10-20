@@ -28,7 +28,7 @@ describe('fixture goldens', () => {
 test('preserves explicit timestamps without generating update times', () => {
   expect(buildDocumentRecord(document).publishedAt).toBe(document.publishedAt);
   expect(buildDocumentRecord(document)).not.toHaveProperty('updatedAt');
-  for (const value of ['2024-02-29T23:59:59Z', '2026-10-01T12:30:00.123456789Z']) {
+  for (const value of ['2024-02-29T23:59:59Z', '2026-10-01T12:30:00.123456789Z', '2026-10-01T12:30:00-05:00', '2026-10-01T12:30:00+00:00']) {
     expect(buildDocumentRecord({ ...document, publishedAt: value, updatedAt: value }).updatedAt).toBe(value);
   }
 });
@@ -38,7 +38,7 @@ test('rejects invalid calendar dates and noncanonical timestamp syntax', () => {
     '2026-02-29T12:00:00.000Z', '2024-02-30T12:00:00.000Z',
     '2026-04-31T12:00:00Z', '2026-13-01T00:00:00Z',
     '2026-01-01T24:00:00Z', '2026-01-01T00:60:00Z', '2026-01-01T00:00:60Z',
-    '2026-01-01', '2026-1-1T00:00:00Z', '2026-01-01T00:00:00+00:00',
+    '2026-01-01', '2026-1-1T00:00:00Z', '2026-01-01T00:00:00+24:00', '2026-01-01T00:00:00+00:60', '2026-02-30T12:00:00-05:00',
     '2026-01-01T00:00:00z', 'garbage', '',
   ]) {
     expect(() => buildDocumentRecord({ ...document, publishedAt: date })).toThrow('publishedAt');

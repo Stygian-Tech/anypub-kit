@@ -98,13 +98,16 @@ function validType(value: unknown): boolean {
 
 function timestamp(value: unknown, field: string): void {
   text(value, field);
-  // Date.parse silently rolls February 30 into March. Compare calendar components
-  // after parsing, retaining the caller's exact UTC timestamp and fractional precision.
-  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z$/.test(value)) {
-    invalid(field, 'Expected an ISO UTC timestamp');
-  }
-  const date = new Date(value);
-  if (!Number.isFinite(date.getTime()) || date.toISOString().slice(0, 19) !== value.slice(0, 19)) {
+  // Validate local calendar components before parsing: Date.parse otherwise
+  // silently rolls dates such as February 30 into March. Preserve RFC3339 offsets.
+  const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,9})?(Z|[+-]\d{2}:\d{2})$/.exec(value);
+  if (!match) invalid(field, 'Expected an ISO timestamp with a timezone');
+  const [year, month, day, hour, minute, second] = match.slice(1, 7).map(Number);
+  const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const days = [31, leapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const zone = match[7]!;
+  if (month < 1 || month > 12 || day < 1 || day > days[month - 1]! || hour > 23 || minute > 59 || second > 59
+    || (zone !== 'Z' && (Number(zone.slice(1, 3)) > 23 || Number(zone.slice(4)) > 59)) || !Number.isFinite(Date.parse(value))) {
     invalid(field, 'Invalid calendar date or time');
   }
 }
