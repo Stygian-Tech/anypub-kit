@@ -1,0 +1,16 @@
+{
+  "name": "@stygian/anypub-kit",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./typescript/src/index.ts",
+    "./records": "./typescript/src/records.ts",
+    "./content": "./typescript/src/content.ts",
+    "./live-content": "./typescript/src/live-content.ts",
+    "./types": "./typescript/src/types.ts"
+  },
+  "files": ["typescript/src"],
+  "scripts": { "test": "bun test typescript/tests", "typecheck": "tsc --noEmit" },
+  "devDependencies": { "@types/bun": "^1.3.4", "typescript": "^5.9.3" },
+  "packageManager": "bun@1.3.14"
+}
