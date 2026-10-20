@@ -31,12 +31,13 @@ public struct StandardSiteRecordBuilder: Sendable {
     labels: JSONValue? = nil, preferences: JSONValue? = nil,
     additionalFields: [String: JSONValue] = [:]
   ) throws -> StandardSitePublicationRecord {
-    let record = StandardSitePublicationRecord(
+    var record = StandardSitePublicationRecord(
       url: url, name: name, icon: icon, description: description,
       basicTheme: basicTheme, labels: labels, preferences: preferences,
       additionalFields: additionalFields
     )
     try validate(record)
+    record.url = normalizedPublicationURL(record.url)
     return record
   }
 
@@ -60,6 +61,7 @@ public struct StandardSiteRecordBuilder: Sendable {
     var record = original
     try changes(&record)
     try validate(record)
+    record.url = normalizedPublicationURL(record.url)
     return record
   }
 
@@ -99,6 +101,11 @@ public struct StandardSiteRecordBuilder: Sendable {
     guard value.utf8.count <= bytes, value.count <= graphemes else {
       throw invalid(field, "Exceeds \(bytes) UTF-8 bytes or \(graphemes) graphemes")
     }
+  }
+
+  // Validate the original URL first so trimming cannot repair an invalid authority.
+  private func normalizedPublicationURL(_ value: String) -> String {
+    String(value.reversed().drop(while: { $0 == "/" }).reversed())
   }
 
   private func validHTTPS(_ value: String) -> Bool {
