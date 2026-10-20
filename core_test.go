@@ -331,3 +331,33 @@ func TestNativeContentGolden(t *testing.T) {
 		})
 	}
 }
+
+func TestOffloadJSONSeparatorsAndLiteralEscapes(t *testing.T) {
+	for _, value := range []string{`\u2028`, `\u2029`, `\\u2028`, "\u2028", "\u2029", "\\\u2028"} {
+		original := value + strings.Repeat("x", 20000)
+		prepared, err := PrepareContentOffload("pckt", Record{"items": []any{Record{"plaintext": original}}})
+		if err != nil {
+			t.Fatal(err)
+		}
+		if prepared.Offload == nil {
+			t.Fatal("expected offload")
+		}
+		var decoded []Record
+		if err := json.Unmarshal([]byte(prepared.Offload.Body), &decoded); err != nil {
+			t.Fatalf("invalid body: %v", err)
+		}
+		if decoded[0]["plaintext"] != original {
+			t.Fatal("content changed while encoding")
+		}
+	}
+}
+func TestMarkpubMaximumBytes(t *testing.T) {
+	for _, host := range []string{"markpub", "unknown"} {
+		if _, err := PrepareContentOffload(host, Record{"text": Record{"markdown": strings.Repeat("a", 1_000_000)}}); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := PrepareContentOffload(host, Record{"text": Record{"markdown": strings.Repeat("a", 1_000_001)}}); err == nil {
+			t.Fatal("accepted oversized Markdown")
+		}
+	}
+}

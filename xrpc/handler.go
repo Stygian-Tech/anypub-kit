@@ -100,6 +100,7 @@ func serve(w http.ResponseWriter, r *http.Request) {
 	}
 	r.Body = http.MaxBytesReader(w, r.Body, MaxRequestBytes)
 	decoder := json.NewDecoder(r.Body)
+	decoder.UseNumber()
 	var request Request
 	if err := decoder.Decode(&request); err != nil {
 		badJSON(w, err)

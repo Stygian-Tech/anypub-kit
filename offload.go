@@ -26,7 +26,30 @@ func wireJSON(v any) (string, error) {
 	if err := e.Encode(v); err != nil {
 		return "", err
 	}
-	return strings.NewReplacer(`\u2028`, " ", `\u2029`, " ").Replace(strings.TrimSuffix(b.String(), "\n")), nil
+	encoded := strings.TrimSuffix(b.String(), "\n")
+	// JSON.stringify emits literal separators. Skip escaped backslash pairs so
+	// user text such as `\\u2028` is not mistaken for an encoded separator.
+	var out strings.Builder
+	for i := 0; i < len(encoded); {
+		if encoded[i] == '\\' && i+1 < len(encoded) {
+			if strings.HasPrefix(encoded[i:], `\u2028`) {
+				out.WriteRune('\u2028')
+				i += 6
+				continue
+			}
+			if strings.HasPrefix(encoded[i:], `\u2029`) {
+				out.WriteRune('\u2029')
+				i += 6
+				continue
+			}
+			out.WriteString(encoded[i : i+2])
+			i += 2
+			continue
+		}
+		out.WriteByte(encoded[i])
+		i++
+	}
+	return out.String(), nil
 }
 func array(v any) ([]any, bool) {
 	switch a := v.(type) {
@@ -51,6 +74,9 @@ func PrepareContentOffload(host string, content Record) (PreparedContent, error)
 		body, ok = object(content["text"])["markdown"].(string)
 		if !ok {
 			return p, fmt.Errorf("Invalid Markpub Markdown content.")
+		}
+		if len(body) > 1_000_000 {
+			return p, fmt.Errorf("Article exceeds Markpub's Markdown blob-size limit")
 		}
 		kind, mime, limit = "markpub-markdown", "text/markdown", 100*1024
 	case "leaflet", "pckt":

@@ -90,3 +90,10 @@ func TestRequestLimitsAndMethod(t *testing.T) {
 		t.Fatalf("media type: %d", recorder.Code)
 	}
 }
+
+func TestIntegerExtensionsRemainExact(t *testing.T) {
+	response := call(t, `{"operation":"document","input":{"site":"https://example.com","title":"Edited","publishedAt":"2026-10-01T12:00:00Z"},"previous":{"extension":{"integer":9007199254740993}}}`)
+	if response.Code != 200 || !strings.Contains(response.Body.String(), `9007199254740993`) {
+		t.Fatalf("integer changed: %d %s", response.Code, response.Body)
+	}
+}
