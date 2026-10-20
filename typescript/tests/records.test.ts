@@ -99,14 +99,14 @@ test('publication optionals and extensions retain or clear, with authoritative r
 });
 
 test('validates HTTPS and publication AT URI sites', () => {
-  for (const site of ['https://example.com', 'https://example.com/publication', 'at://writer.example/site.standard.publication/key']) {
+  for (const site of ['https://example.com', 'https://example.com/publication', 'at://writer.example/site.standard.publication/key', 'at://did:web:localhost%3A8443/site.standard.publication/key']) {
     expect(buildDocumentRecord({ ...document, site }).site).toBe(site);
   }
   for (const site of [
     'http://example.com', 'https://', 'https://u:p@example.com', 'https://@example.com',
     'https://example.com?', 'https://example.com#', 'https://example.com/a b',
     'at://did:plc:example/site.standard.document/key', 'at://did:plc:example/site.standard.publication/..',
-    'at://did:plc:example/site.standard.publication/%61', 'at://did:plc:example/site.standard.publication/' + 'a'.repeat(513),
+    'at://did:plc:example/site.standard.publication/%61', 'at://did:web:localhost%zz/site.standard.publication/key', 'at://did:plc:example/site.standard.publication/' + 'a'.repeat(513),
   ]) expect(() => buildDocumentRecord({ ...document, site })).toThrow('site');
   for (const url of ['http://example.com', document.site, 'https://example.com?x=1']) {
     expect(() => buildPublicationRecord({ url, name: 'Name' })).toThrow('url');
@@ -126,7 +126,7 @@ test('content requires a valid Lexicon type', () => {
   for (const type of ['at.markpub.markdown', 'at.markpub.markdown#main_view']) {
     expect(buildDocumentRecord({ ...document, content: { $type: type, custom: true } }).content).toEqual({ $type: type, custom: true });
   }
-  for (const content of [null, [], 'text', {}, { $type: 'invalid' }, { $type: 'at.markpub.bad-name' }, { $type: 'at.markpub.text#' }, { $type: 'at.markpub.text#x#y' }, { $type: `${'a'.repeat(64)}.example.text` }]) {
+  for (const content of [null, [], 'text', {}, { $type: 'invalid' }, { $type: 'at.markpub.bad-name' }, { $type: 'at.markpub.text#' }, { $type: 'at.markpub.markdown#main' }, { $type: 'at.markpub.text#x#y' }, { $type: `${'a'.repeat(64)}.example.text` }]) {
     expect(() => buildDocumentRecord({ ...document, content } as DocumentRecordInput)).toThrow('content');
   }
 });

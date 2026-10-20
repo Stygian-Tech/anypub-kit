@@ -119,6 +119,7 @@ func rejectsDocumentSites(_ value: String) {
 @Test(arguments: [
   JSONValue.null, .string("markdown"), .object([:]), .object(["$type": .string("invalid")]),
   .object(["$type": .string("a.b.c#")]),
+  .object(["$type": .string("at.markpub.markdown#main")]),
 ])
 func rejectsInvalidContent(_ content: JSONValue) {
   #expect(throws: StandardSiteValidationError.self) {

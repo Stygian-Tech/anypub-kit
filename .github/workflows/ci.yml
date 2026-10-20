@@ -15,15 +15,15 @@ jobs:
     container: swift:6.2-noble
     steps:
       - uses: actions/checkout@v6
-      - run: swift test --enable-swift-testing --disable-xctest --warnings-as-errors
-      - run: swift build -c release --warnings-as-errors
+      - run: swift test --enable-swift-testing --disable-xctest -Xswiftc -warnings-as-errors
+      - run: swift build -c release -Xswiftc -warnings-as-errors
   swift-macos:
     name: Swift / macOS
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v6
-      - run: swift test --enable-swift-testing --disable-xctest --warnings-as-errors
-      - run: swift build -c release --warnings-as-errors
+      - run: swift test --enable-swift-testing --disable-xctest -Xswiftc -warnings-as-errors
+      - run: swift build -c release -Xswiftc -warnings-as-errors
   typescript:
     name: TypeScript
     runs-on: ubuntu-latest

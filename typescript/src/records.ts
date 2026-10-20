@@ -63,13 +63,13 @@ function validHTTPS(value: string): boolean {
 }
 
 function validPublicationURI(value: string): boolean {
-  if (!clean(value) || /[%?#@]/.test(value)) return false;
+  if (!clean(value) || /[?#@]/.test(value)) return false;
   const match = /^at:\/\/([^/]+)\/site\.standard\.publication\/([A-Za-z0-9._~:-]+)$/.exec(value);
   if (!match) return false;
   const authority = match[1]!;
   const key = match[2]!;
   const validAuthority = authority.startsWith('did:')
-    ? /^did:[a-z]+:[A-Za-z0-9._:%-]+$/.test(authority)
+    ? /^did:[a-z]+:(?:[A-Za-z0-9._:-]|%[0-9A-Fa-f]{2})+$/.test(authority)
     : /^[A-Za-z0-9]([A-Za-z0-9.-]*[A-Za-z0-9])?\.[A-Za-z]{2,}$/.test(authority);
   return validAuthority && key !== '.' && key !== '..' && key.length <= 512;
 }
@@ -91,6 +91,7 @@ function validType(value: unknown): boolean {
   const nsid = pieces[0]!;
   const parts = nsid.split('.');
   if (pieces.length > 2 || parts.length < 3 || encoder.encode(nsid).length > 317) return false;
+  if (pieces[1] === 'main') return false;
   return parts.every((part, index) => encoder.encode(part).length <= 63 && (
     index === parts.length - 1 ? /^[A-Za-z][A-Za-z0-9]*$/ : /^[A-Za-z]([A-Za-z0-9-]*[A-Za-z0-9])?$/
   ).test(part)) && (pieces.length === 1 || /^[A-Za-z][A-Za-z0-9_]*$/.test(pieces[1]!));

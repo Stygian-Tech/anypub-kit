@@ -76,8 +76,8 @@ Builders preserve previous extension fields. An omitted property retains its pri
 Record builders validate metadata byte and grapheme limits, publication URLs, document sites, safe relative paths, and content discriminators. Content is an open union selected by `$type`; Standard.site does not mandate a single article-body format. Host selection and publication ownership are application policy.
 
 ```sh
-swift test --enable-swift-testing --disable-xctest --warnings-as-errors
-swift build -c release --warnings-as-errors
+swift test --enable-swift-testing --disable-xctest -Xswiftc -warnings-as-errors
+swift build -c release -Xswiftc -warnings-as-errors
 bun install --frozen-lockfile
 bun run typecheck
 bun test

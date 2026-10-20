@@ -157,7 +157,7 @@ public struct StandardSiteRecordBuilder: Sendable {
 
   private func validType(_ value: String) -> Bool {
     let pieces = value.split(separator: "#", omittingEmptySubsequences: false)
-    guard pieces.count <= 2 else { return false }
+    guard pieces.count <= 2, pieces.last != "main" else { return false }
     let parts = pieces[0].split(separator: ".", omittingEmptySubsequences: false)
     guard parts.count >= 3, pieces[0].utf8.count <= 317 else { return false }
     for (index, part) in parts.enumerated() {
