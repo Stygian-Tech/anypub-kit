@@ -1,0 +1,1102 @@
+[
+  {
+    "name": "leaflet-rich-blocks",
+    "input": {
+      "host": "leaflet",
+      "markdown": "# Title\n\nHello **é🦋** and [link](https://example.com).\n\n- [x] Done\n  3. Child\n\n```TS\nliteral **code**\n```\n\n> One\n> Two\n\n---",
+      "description": "Summary",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "heading",
+          "source": "Title",
+          "headingLevel": 1
+        },
+        {
+          "kind": "paragraph",
+          "source": "Hello **é🦋** and [link](https://example.com)."
+        },
+        {
+          "kind": "unordered-list",
+          "source": "- [x] Done",
+          "listLevel": 0
+        },
+        {
+          "kind": "ordered-list",
+          "source": "  3. Child",
+          "listLevel": 1,
+          "listStart": 3
+        },
+        {
+          "kind": "code",
+          "source": "literal **code**",
+          "language": "TS"
+        },
+        {
+          "kind": "quote",
+          "source": "> One\n> Two"
+        },
+        {
+          "kind": "thematic-break",
+          "source": "---"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "pub.leaflet.content",
+        "pages": [
+          {
+            "$type": "pub.leaflet.pages.linearDocument",
+            "blocks": [
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.header",
+                  "level": 1,
+                  "plaintext": "Title"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "plaintext": "Hello é🦋 and link.",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteStart": 6,
+                        "byteEnd": 12
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#bold"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteStart": 17,
+                        "byteEnd": 21
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#link",
+                          "uri": "https://example.com"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.unorderedList",
+                  "children": [
+                    {
+                      "content": {
+                        "$type": "pub.leaflet.blocks.text",
+                        "plaintext": "Done"
+                      },
+                      "checked": true,
+                      "orderedListChildren": {
+                        "$type": "pub.leaflet.blocks.orderedList",
+                        "children": [
+                          {
+                            "content": {
+                              "$type": "pub.leaflet.blocks.text",
+                              "plaintext": "Child"
+                            }
+                          }
+                        ],
+                        "startIndex": 3
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.code",
+                  "plaintext": "literal **code**",
+                  "language": "ts"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.blockquote",
+                  "plaintext": "One\nTwo"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.horizontalRule"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "textContent": "Title\n\nHello é🦋 and link.\n\nDone\n\nChild\n\nliteral **code**\n\nOne\nTwo"
+    }
+  },
+  {
+    "name": "offprint-rich-blocks",
+    "input": {
+      "host": "offprint",
+      "markdown": "# Title\n\nHello **é🦋** and [link](https://example.com).\n\n- [x] Done\n  3. Child\n\n```TS\nliteral **code**\n```\n\n> One\n> Two\n\n---",
+      "description": "Summary",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "heading",
+          "source": "Title",
+          "headingLevel": 1
+        },
+        {
+          "kind": "paragraph",
+          "source": "Hello **é🦋** and [link](https://example.com)."
+        },
+        {
+          "kind": "unordered-list",
+          "source": "- [x] Done",
+          "listLevel": 0
+        },
+        {
+          "kind": "ordered-list",
+          "source": "  3. Child",
+          "listLevel": 1,
+          "listStart": 3
+        },
+        {
+          "kind": "code",
+          "source": "literal **code**",
+          "language": "TS"
+        },
+        {
+          "kind": "quote",
+          "source": "> One\n> Two"
+        },
+        {
+          "kind": "thematic-break",
+          "source": "---"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 1,
+            "plaintext": "Title"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Hello é🦋 and link.",
+            "facets": [
+              {
+                "index": {
+                  "byteStart": 6,
+                  "byteEnd": 12
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteStart": 17,
+                  "byteEnd": 21
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#link",
+                    "uri": "https://example.com"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.taskList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "plaintext": "Done"
+                },
+                "checked": true,
+                "children": [
+                  {
+                    "content": {
+                      "$type": "app.offprint.block.text",
+                      "plaintext": "Child"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.codeBlock",
+            "code": "literal **code**",
+            "language": "ts"
+          },
+          {
+            "$type": "app.offprint.block.blockquote",
+            "content": [
+              {
+                "$type": "app.offprint.block.text",
+                "plaintext": "One"
+              },
+              {
+                "$type": "app.offprint.block.text",
+                "plaintext": "Two"
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.horizontalRule"
+          }
+        ]
+      },
+      "textContent": "Title\n\nHello é🦋 and link.\n\nDone\n\nChild\n\nliteral **code**\n\nOne\nTwo"
+    }
+  },
+  {
+    "name": "pckt-rich-blocks",
+    "input": {
+      "host": "pckt",
+      "markdown": "# Title\n\nHello **é🦋** and [link](https://example.com).\n\n- [x] Done\n  3. Child\n\n```TS\nliteral **code**\n```\n\n> One\n> Two\n\n---",
+      "description": "Summary",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "heading",
+          "source": "Title",
+          "headingLevel": 1
+        },
+        {
+          "kind": "paragraph",
+          "source": "Hello **é🦋** and [link](https://example.com)."
+        },
+        {
+          "kind": "unordered-list",
+          "source": "- [x] Done",
+          "listLevel": 0
+        },
+        {
+          "kind": "ordered-list",
+          "source": "  3. Child",
+          "listLevel": 1,
+          "listStart": 3
+        },
+        {
+          "kind": "code",
+          "source": "literal **code**",
+          "language": "TS"
+        },
+        {
+          "kind": "quote",
+          "source": "> One\n> Two"
+        },
+        {
+          "kind": "thematic-break",
+          "source": "---"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.heading",
+            "level": 3,
+            "plaintext": "Summary"
+          },
+          {
+            "$type": "blog.pckt.block.heading",
+            "level": 1,
+            "plaintext": "Title"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Hello é🦋 and link.",
+            "facets": [
+              {
+                "index": {
+                  "byteStart": 6,
+                  "byteEnd": 12
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteStart": 17,
+                  "byteEnd": 21
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#link",
+                    "uri": "https://example.com"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.taskList",
+            "content": [
+              {
+                "$type": "blog.pckt.block.taskItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "Done"
+                  },
+                  {
+                    "$type": "blog.pckt.block.orderedList",
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.listItem",
+                        "content": [
+                          {
+                            "$type": "blog.pckt.block.text",
+                            "plaintext": "Child"
+                          }
+                        ]
+                      }
+                    ],
+                    "start": 3
+                  }
+                ],
+                "checked": true
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.codeBlock",
+            "plaintext": "literal **code**",
+            "language": "ts"
+          },
+          {
+            "$type": "blog.pckt.block.blockquote",
+            "content": [
+              {
+                "$type": "blog.pckt.block.text",
+                "plaintext": "One"
+              },
+              {
+                "$type": "blog.pckt.block.text",
+                "plaintext": "Two"
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.horizontalRule"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          }
+        ]
+      },
+      "textContent": "Title\n\nHello é🦋 and link.\n\nDone\n\nChild\n\nliteral **code**\n\nOne\nTwo"
+    }
+  },
+  {
+    "name": "markpub-rich-blocks",
+    "input": {
+      "host": "markpub",
+      "markdown": "# Title\n\nHello **é🦋** and [link](https://example.com).\n\n- [x] Done\n  3. Child\n\n```TS\nliteral **code**\n```\n\n> One\n> Two\n\n---",
+      "description": "Summary",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "heading",
+          "source": "Title",
+          "headingLevel": 1
+        },
+        {
+          "kind": "paragraph",
+          "source": "Hello **é🦋** and [link](https://example.com)."
+        },
+        {
+          "kind": "unordered-list",
+          "source": "- [x] Done",
+          "listLevel": 0
+        },
+        {
+          "kind": "ordered-list",
+          "source": "  3. Child",
+          "listLevel": 1,
+          "listStart": 3
+        },
+        {
+          "kind": "code",
+          "source": "literal **code**",
+          "language": "TS"
+        },
+        {
+          "kind": "quote",
+          "source": "> One\n> Two"
+        },
+        {
+          "kind": "thematic-break",
+          "source": "---"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "at.markpub.markdown",
+        "flavor": "gfm",
+        "text": {
+          "$type": "at.markpub.text",
+          "markdown": "# Title\n\nHello **é🦋** and [link](https://example.com).\n\n- [x] Done\n  3. Child\n\n```TS\nliteral **code**\n```\n\n> One\n> Two\n\n---"
+        }
+      },
+      "textContent": "Title\n\nHello é🦋 and link.\n\nDone\n\nChild\n\nliteral **code**\n\nOne\nTwo"
+    }
+  },
+  {
+    "name": "leaflet-fences-and-headings",
+    "input": {
+      "host": "leaflet",
+      "markdown": "Setext Heading\n====\nFollowing paragraph\n\n````ts\n```literal\n````\n\n~~~\nUnclosed code",
+      "description": "",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "heading",
+          "source": "Setext Heading",
+          "headingLevel": 1
+        },
+        {
+          "kind": "paragraph",
+          "source": "Following paragraph"
+        },
+        {
+          "kind": "code",
+          "source": "```literal",
+          "language": "ts"
+        },
+        {
+          "kind": "code",
+          "source": "Unclosed code"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "pub.leaflet.content",
+        "pages": [
+          {
+            "$type": "pub.leaflet.pages.linearDocument",
+            "blocks": [
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.header",
+                  "level": 1,
+                  "plaintext": "Setext Heading"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "plaintext": "Following paragraph"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.code",
+                  "plaintext": "```literal",
+                  "language": "ts"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.code",
+                  "plaintext": "Unclosed code"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "textContent": "Setext Heading\n\nFollowing paragraph\n\n```literal\n\nUnclosed code"
+    }
+  },
+  {
+    "name": "offprint-fences-and-headings",
+    "input": {
+      "host": "offprint",
+      "markdown": "Setext Heading\n====\nFollowing paragraph\n\n````ts\n```literal\n````\n\n~~~\nUnclosed code",
+      "description": "",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "heading",
+          "source": "Setext Heading",
+          "headingLevel": 1
+        },
+        {
+          "kind": "paragraph",
+          "source": "Following paragraph"
+        },
+        {
+          "kind": "code",
+          "source": "```literal",
+          "language": "ts"
+        },
+        {
+          "kind": "code",
+          "source": "Unclosed code"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 1,
+            "plaintext": "Setext Heading"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Following paragraph"
+          },
+          {
+            "$type": "app.offprint.block.codeBlock",
+            "code": "```literal",
+            "language": "ts"
+          },
+          {
+            "$type": "app.offprint.block.codeBlock",
+            "code": "Unclosed code"
+          }
+        ]
+      },
+      "textContent": "Setext Heading\n\nFollowing paragraph\n\n```literal\n\nUnclosed code"
+    }
+  },
+  {
+    "name": "pckt-fences-and-headings",
+    "input": {
+      "host": "pckt",
+      "markdown": "Setext Heading\n====\nFollowing paragraph\n\n````ts\n```literal\n````\n\n~~~\nUnclosed code",
+      "description": "",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "heading",
+          "source": "Setext Heading",
+          "headingLevel": 1
+        },
+        {
+          "kind": "paragraph",
+          "source": "Following paragraph"
+        },
+        {
+          "kind": "code",
+          "source": "```literal",
+          "language": "ts"
+        },
+        {
+          "kind": "code",
+          "source": "Unclosed code"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.heading",
+            "level": 1,
+            "plaintext": "Setext Heading"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Following paragraph"
+          },
+          {
+            "$type": "blog.pckt.block.codeBlock",
+            "plaintext": "```literal",
+            "language": "ts"
+          },
+          {
+            "$type": "blog.pckt.block.codeBlock",
+            "plaintext": "Unclosed code"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          }
+        ]
+      },
+      "textContent": "Setext Heading\n\nFollowing paragraph\n\n```literal\n\nUnclosed code"
+    }
+  },
+  {
+    "name": "markpub-fences-and-headings",
+    "input": {
+      "host": "markpub",
+      "markdown": "Setext Heading\n====\nFollowing paragraph\n\n````ts\n```literal\n````\n\n~~~\nUnclosed code",
+      "description": "",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "heading",
+          "source": "Setext Heading",
+          "headingLevel": 1
+        },
+        {
+          "kind": "paragraph",
+          "source": "Following paragraph"
+        },
+        {
+          "kind": "code",
+          "source": "```literal",
+          "language": "ts"
+        },
+        {
+          "kind": "code",
+          "source": "Unclosed code"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "at.markpub.markdown",
+        "flavor": "gfm",
+        "text": {
+          "$type": "at.markpub.text",
+          "markdown": "Setext Heading\n====\nFollowing paragraph\n\n````ts\n```literal\n````\n\n~~~\nUnclosed code"
+        }
+      },
+      "textContent": "Setext Heading\n\nFollowing paragraph\n\n```literal\n\nUnclosed code"
+    }
+  },
+  {
+    "name": "leaflet-image",
+    "input": {
+      "host": "leaflet",
+      "markdown": "![Caption](article-asset://image)\n\n@[embed](https://example.com)",
+      "description": "",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "image",
+          "source": "![Caption](article-asset://image)",
+          "alt": "Caption",
+          "url": "article-asset://image"
+        },
+        {
+          "kind": "embed",
+          "source": "@[embed](https://example.com)",
+          "url": "https://example.com"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "pub.leaflet.content",
+        "pages": [
+          {
+            "$type": "pub.leaflet.pages.linearDocument",
+            "blocks": [
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.image",
+                  "image": {
+                    "$type": "blob",
+                    "ref": {
+                      "$link": "bafkreitest"
+                    },
+                    "mimeType": "image/png",
+                    "size": 3
+                  },
+                  "alt": "Caption",
+                  "aspectRatio": {
+                    "width": 640,
+                    "height": 480
+                  }
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.website",
+                  "src": "https://example.com",
+                  "title": "https://example.com"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "textContent": "Caption\n\nhttps://example.com"
+    }
+  },
+  {
+    "name": "offprint-image",
+    "input": {
+      "host": "offprint",
+      "markdown": "![Caption](article-asset://image)\n\n@[embed](https://example.com)",
+      "description": "",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "image",
+          "source": "![Caption](article-asset://image)",
+          "alt": "Caption",
+          "url": "article-asset://image"
+        },
+        {
+          "kind": "embed",
+          "source": "@[embed](https://example.com)",
+          "url": "https://example.com"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.image",
+            "image": {
+              "$type": "blob",
+              "ref": {
+                "$link": "bafkreitest"
+              },
+              "mimeType": "image/png",
+              "size": 3
+            },
+            "alt": "Caption",
+            "aspectRatio": {
+              "width": 640,
+              "height": 480
+            },
+            "width": "100%",
+            "alignment": "center"
+          },
+          {
+            "$type": "app.offprint.block.webEmbed",
+            "href": "https://example.com",
+            "title": "https://example.com",
+            "width": "100%",
+            "alignment": "center"
+          }
+        ]
+      },
+      "textContent": "Caption\n\nhttps://example.com"
+    }
+  },
+  {
+    "name": "pckt-image",
+    "input": {
+      "host": "pckt",
+      "markdown": "![Caption](article-asset://image)\n\n@[embed](https://example.com)",
+      "description": "",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "image",
+          "source": "![Caption](article-asset://image)",
+          "alt": "Caption",
+          "url": "article-asset://image"
+        },
+        {
+          "kind": "embed",
+          "source": "@[embed](https://example.com)",
+          "url": "https://example.com"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "src": "blob:bafkreitest",
+              "blob": {
+                "$type": "blob",
+                "ref": {
+                  "$link": "bafkreitest"
+                },
+                "mimeType": "image/png",
+                "size": 3
+              },
+              "alt": "Caption",
+              "align": "center",
+              "aspectRatio": {
+                "width": 640,
+                "height": 480
+              }
+            }
+          },
+          {
+            "$type": "blog.pckt.block.website",
+            "src": "https://example.com",
+            "title": "https://example.com"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          }
+        ]
+      },
+      "textContent": "Caption\n\nhttps://example.com"
+    }
+  },
+  {
+    "name": "markpub-image",
+    "input": {
+      "host": "markpub",
+      "markdown": "![Caption](article-asset://image)\n\n@[embed](https://example.com)",
+      "description": "",
+      "assets": [
+        {
+          "id": "image",
+          "blob": {
+            "$type": "blob",
+            "ref": {
+              "$link": "bafkreitest"
+            },
+            "mimeType": "image/png",
+            "size": 3
+          },
+          "alt": "Photo",
+          "width": 640,
+          "height": 480,
+          "url": "https://pds.test/blob"
+        }
+      ],
+      "blocks": [
+        {
+          "kind": "image",
+          "source": "![Caption](article-asset://image)",
+          "alt": "Caption",
+          "url": "article-asset://image"
+        },
+        {
+          "kind": "embed",
+          "source": "@[embed](https://example.com)",
+          "url": "https://example.com"
+        }
+      ]
+    },
+    "expected": {
+      "content": {
+        "$type": "at.markpub.markdown",
+        "flavor": "gfm",
+        "text": {
+          "$type": "at.markpub.text",
+          "markdown": "![Caption](https://pds.test/blob)\n\n[https://example.com](https://example.com)"
+        }
+      },
+      "textContent": "Caption\n\nhttps://example.com"
+    }
+  }
+]

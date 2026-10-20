@@ -1,0 +1,97 @@
+{
+  "lexicon": 1,
+  "id": "tech.stygian.anypub.prepare",
+  "defs": {
+    "main": {
+      "type": "procedure",
+      "description": "Stateless Standard.site preparation. Does not accept authentication credentials or perform PDS writes.",
+      "input": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": [
+            "operation"
+          ],
+          "properties": {
+            "operation": {
+              "type": "string",
+              "enum": [
+                "document",
+                "publication",
+                "article",
+                "offload",
+                "replaceOffload",
+                "live",
+                "wrapper"
+              ]
+            },
+            "input": {
+              "type": "unknown"
+            },
+            "previous": {
+              "type": "unknown"
+            },
+            "native": {
+              "type": "unknown"
+            },
+            "content": {
+              "type": "unknown"
+            },
+            "prepared": {
+              "type": "unknown"
+            },
+            "blob": {
+              "type": "unknown"
+            },
+            "reference": {
+              "type": "unknown"
+            },
+            "host": {
+              "type": "string"
+            },
+            "site": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "clearFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "record": {
+              "type": "unknown"
+            },
+            "native": {
+              "type": "unknown"
+            },
+            "prepared": {
+              "type": "unknown"
+            },
+            "content": {
+              "type": "unknown"
+            }
+          }
+        }
+      },
+      "errors": [
+        {
+          "name": "InvalidRequest"
+        }
+      ]
+    }
+  }
+}
