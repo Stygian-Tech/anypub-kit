@@ -4,8 +4,10 @@ package anypub
 
 import (
 	"fmt"
+	"net"
 	"net/url"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 	"unicode"
@@ -32,11 +34,7 @@ func str(v any) string { s, _ := v.(string); return s }
 func merge(input, previous Record, t string) Record {
 	r := clone(previous)
 	for k, v := range input {
-		if v == nil {
-			delete(r, k)
-		} else {
-			r[k] = v
-		}
+		r[k] = v
 	}
 	r["$type"] = t
 	return r
@@ -63,7 +61,19 @@ func validHTTPS(s string) bool {
 		return false
 	}
 	u, e := url.Parse(s)
-	return e == nil && u.Hostname() != "" && u.User == nil && !strings.Contains(strings.SplitN(s[8:], "/", 2)[0], "@")
+	if e != nil || u.Hostname() == "" || u.User != nil || strings.Contains(strings.SplitN(s[8:], "/", 2)[0], "@") {
+		return false
+	}
+	if p := u.Port(); p != "" {
+		n, err := strconv.Atoi(p)
+		if err != nil || n > 65535 {
+			return false
+		}
+	}
+	if strings.Contains(u.Host, "[") && net.ParseIP(u.Hostname()) == nil {
+		return false
+	}
+	return true
 }
 
 var publicationPattern = regexp.MustCompile(`^at://([^/]+)/site\.standard\.publication/([A-Za-z0-9._~:-]+)$`)
@@ -141,7 +151,7 @@ func validateTimestamp(v any, field string) error {
 	return nil
 }
 
-// BuildDocumentRecord merges input into previous. A nil input value removes a field.
+// BuildDocumentRecord merges input into previous without mutating either record.
 func BuildDocumentRecord(input Record, previous Record) (Record, error) {
 	r := merge(input, previous, "site.standard.document")
 	if e := text(r["site"], "site", 0, 0); e != nil {

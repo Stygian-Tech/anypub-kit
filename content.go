@@ -19,6 +19,7 @@ type ImageAsset struct {
 type MarkdownBlock struct {
 	Kind         string `json:"kind"`
 	Source       string `json:"source"`
+	RawSource    string `json:"rawSource,omitempty"`
 	HeadingLevel int    `json:"headingLevel,omitempty"`
 	Language     string `json:"language,omitempty"`
 	URL          string `json:"url,omitempty"`
@@ -155,6 +156,18 @@ func codeText(s string) string {
 	}
 	return s
 }
+func blockCodeText(b MarkdownBlock) string {
+	if b.RawSource != "" {
+		return codeText(b.RawSource)
+	}
+	return b.Source
+}
+func blockHeadingText(b MarkdownBlock) string {
+	if b.RawSource != "" {
+		return headingText(b.RawSource)
+	}
+	return b.Source
+}
 func quoteLines(s string) []string {
 	a := strings.Split(s, "\n")
 	for i := range a {
@@ -178,7 +191,7 @@ func BuildArticleNativeContent(in NativeContentInput) (NativeContent, error) {
 			}
 			return nil, nil
 		}
-		if a.Width <= 0 || a.Height <= 0 || a.Width > 9007199254740991 || a.Height > 9007199254740991 || math.Trunc(a.Width) != a.Width || math.Trunc(a.Height) != a.Height || str(a.Blob["$type"]) != "blob" || str(object(a.Blob["ref"])["$link"]) == "" {
+		if math.IsNaN(a.Width) || math.IsNaN(a.Height) || a.Width <= 0 || a.Height <= 0 || a.Width > 9007199254740991 || a.Height > 9007199254740991 || math.Trunc(a.Width) != a.Width || math.Trunc(a.Height) != a.Height || str(a.Blob["$type"]) != "blob" || str(object(a.Blob["ref"])["$link"]) == "" {
 			return nil, fmt.Errorf("Invalid article image asset.")
 		}
 		return &a, nil
@@ -199,9 +212,9 @@ func BuildArticleNativeContent(in NativeContentInput) (NativeContent, error) {
 		case "thematic-break", "empty":
 			s = ""
 		case "code":
-			s = codeText(s)
+			s = blockCodeText(b)
 		case "heading":
-			s = str(ArticleRichText(headingText(s), "")["plaintext"])
+			s = str(ArticleRichText(blockHeadingText(b), "")["plaintext"])
 		case "quote":
 			s = str(ArticleRichText(strings.Join(quoteLines(s), "\n"), "")["plaintext"])
 		default:
@@ -255,7 +268,7 @@ func BuildArticleNativeContent(in NativeContentInput) (NativeContent, error) {
 	convert := func(b MarkdownBlock) (Record, error) {
 		switch b.Kind {
 		case "heading":
-			r := rich(headingText(b.Source))
+			r := rich(blockHeadingText(b))
 			t := "heading"
 			if host == "leaflet" {
 				t = "header"
@@ -290,7 +303,7 @@ func BuildArticleNativeContent(in NativeContentInput) (NativeContent, error) {
 			if host == "offprint" {
 				f = "code"
 			}
-			r := Record{"$type": bn + "." + t, f: codeText(b.Source)}
+			r := Record{"$type": bn + "." + t, f: blockCodeText(b)}
 			language := strings.ToLower(strings.TrimSpace(b.Language))
 			for len(language) > 50 {
 				_, size := utf8.DecodeLastRuneInString(language)
