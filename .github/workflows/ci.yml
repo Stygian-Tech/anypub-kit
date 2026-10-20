@@ -9,23 +9,20 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  swift-linux:
-    name: Swift / Linux
+  go:
+    name: Go / Linux
     runs-on: ubuntu-latest
-    container: swift:6.2-noble
     steps:
       - uses: actions/checkout@v6
-      - run: swift test --enable-swift-testing --disable-xctest -Xswiftc -warnings-as-errors
-      - run: swift build -c release -Xswiftc -warnings-as-errors
-  swift-macos:
-    name: Swift / macOS
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v6
-      - run: swift test --enable-swift-testing --disable-xctest -Xswiftc -warnings-as-errors
-      - run: swift build -c release -Xswiftc -warnings-as-errors
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      - run: test -z "$(gofmt -l .)"
+      - run: go vet ./...
+      - run: go test -race -coverprofile=coverage.out ./...
+      - run: go build ./...
   typescript:
-    name: TypeScript
+    name: Browser transport
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
