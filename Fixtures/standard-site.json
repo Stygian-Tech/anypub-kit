@@ -1,0 +1,68 @@
+[
+  {
+    "name": "publication",
+    "kind": "publication",
+    "input": {
+      "url": "https://example.com/",
+      "name": "Example Publication",
+      "description": "Independent writing",
+      "preferences": {
+        "showInDiscover": true
+      }
+    },
+    "expected": {
+      "$type": "site.standard.publication",
+      "url": "https://example.com",
+      "name": "Example Publication",
+      "description": "Independent writing",
+      "preferences": {
+        "showInDiscover": true
+      }
+    }
+  },
+  {
+    "name": "unicode-document",
+    "kind": "document",
+    "input": {
+      "site": "at://did:plc:qy5pluw2bsuq2x6albsgkvx3/site.standard.publication/3mybn6uwehs2d",
+      "title": "Café 🦋",
+      "publishedAt": "2026-10-01T12:30:00.000Z",
+      "updatedAt": "2026-10-02T13:00:00.000Z",
+      "path": "/posts/cafe",
+      "tags": [
+        "atproto"
+      ],
+      "description": "A Unicode essay",
+      "textContent": "Hello é🦋",
+      "content": {
+        "$type": "at.markpub.markdown",
+        "flavor": "gfm",
+        "text": {
+          "$type": "at.markpub.text",
+          "markdown": "Hello **é🦋**"
+        }
+      }
+    },
+    "expected": {
+      "$type": "site.standard.document",
+      "site": "at://did:plc:qy5pluw2bsuq2x6albsgkvx3/site.standard.publication/3mybn6uwehs2d",
+      "title": "Café 🦋",
+      "publishedAt": "2026-10-01T12:30:00.000Z",
+      "updatedAt": "2026-10-02T13:00:00.000Z",
+      "path": "/posts/cafe",
+      "tags": [
+        "atproto"
+      ],
+      "description": "A Unicode essay",
+      "textContent": "Hello é🦋",
+      "content": {
+        "$type": "at.markpub.markdown",
+        "flavor": "gfm",
+        "text": {
+          "$type": "at.markpub.text",
+          "markdown": "Hello **é🦋**"
+        }
+      }
+    }
+  }
+]
