@@ -7,10 +7,12 @@
     "./records": "./typescript/src/records.ts",
     "./content": "./typescript/src/content.ts",
     "./live-content": "./typescript/src/live-content.ts",
-    "./types": "./typescript/src/types.ts"
+    "./types": "./typescript/src/types.ts",
+    "./lexicons/tech.stygian.anypub.prepare.json": "./lexicons/tech.stygian.anypub.prepare.json"
   },
   "files": [
-    "typescript/src"
+    "typescript/src",
+    "lexicons"
   ],
   "scripts": {
     "test": "bun test typescript/tests",
