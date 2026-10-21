@@ -10,7 +10,7 @@ test("serializes explicit optional clearing and preserves extensions without tra
   const signal = new AbortController().signal;
   const previous = { description: "old", custom: { future: true } };
   const result = await buildDocumentRecord({ ...input, description: undefined }, previous, { signal, fetcher: fetcher({ record }, (url, options) => {
-    expect(url).toBe("/xrpc/tech.stygian.anypub.prepare");
+    expect(url).toBe("/xrpc/at.anypub.prepare");
     expect(options?.method).toBe("POST");
     expect(options?.credentials).toBe("omit");
     expect(options?.redirect).toBe("error");
@@ -23,7 +23,7 @@ test("serializes explicit optional clearing and preserves extensions without tra
 });
 test("every publishing operation calls the Go service with its structured inputs", async () => {
   const calls: Record<string, unknown>[] = [];
-  const options = { endpoint: "https://api.example/xrpc/tech.stygian.anypub.prepare", fetcher: fetcher({ record, native: { content: {}, textContent: "" }, prepared: { content: {} }, content: { prepared: true } }, (_, init) => calls.push(JSON.parse(init!.body as string))) };
+  const options = { endpoint: "https://api.example/xrpc/at.anypub.prepare", fetcher: fetcher({ record, native: { content: {}, textContent: "" }, prepared: { content: {} }, content: { prepared: true } }, (_, init) => calls.push(JSON.parse(init!.body as string))) };
   await buildPublicationRecord({ url: "https://example.com", name: "Publication" }, undefined, options);
   await buildArticleNativeContent({ host: "markpub", markdown: "Text", assets: [], blocks: [] }, options);
   const prepared = await prepareContentOffload("markpub", {}, options);

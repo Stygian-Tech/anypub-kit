@@ -8,7 +8,7 @@
     "./content": "./typescript/src/content.ts",
     "./live-content": "./typescript/src/live-content.ts",
     "./types": "./typescript/src/types.ts",
-    "./lexicons/tech.stygian.anypub.prepare.json": "./lexicons/tech.stygian.anypub.prepare.json"
+    "./lexicons/at.anypub.prepare.json": "./lexicons/at.anypub.prepare.json"
   },
   "files": [
     "typescript/src",

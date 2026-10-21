@@ -1,6 +1,6 @@
 {
   "lexicon": 1,
-  "id": "tech.stygian.anypub.prepare",
+  "id": "at.anypub.prepare",
   "defs": {
     "main": {
       "type": "procedure",

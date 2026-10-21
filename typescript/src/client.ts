@@ -1,6 +1,6 @@
 import type { ArticleBlob, ArticleHost, ArticleImageAsset, ArticleRecord, MarkdownBlock } from "./types";
 
-export const PREPARE_NSID = "tech.stygian.anypub.prepare";
+export const PREPARE_NSID = "at.anypub.prepare";
 export interface PreparationOptions { signal?: AbortSignal; fetcher?: typeof fetch; endpoint?: string }
 export interface DocumentRecordInput {
   site: string; title: string; publishedAt: string; updatedAt?: string;

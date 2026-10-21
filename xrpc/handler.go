@@ -13,7 +13,7 @@ import (
 	kit "github.com/stygian-tech/anypub-kit"
 )
 
-const NSID = "tech.stygian.anypub.prepare"
+const NSID = "at.anypub.prepare"
 const MaxRequestBytes int64 = 8 << 20
 
 // Request describes one deterministic operation. Fields not used by an operation

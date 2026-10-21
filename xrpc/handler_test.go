@@ -5,11 +5,40 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
 
 	"github.com/stygian-tech/anypub-kit/xrpc"
 )
+
+func TestPublishedProcedureContract(t *testing.T) {
+	data, err := os.ReadFile("../lexicons/at.anypub.prepare.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var schema struct {
+		ID   string `json:"id"`
+		Defs map[string]struct {
+			Type string `json:"type"`
+		} `json:"defs"`
+	}
+	if err := json.Unmarshal(data, &schema); err != nil {
+		t.Fatal(err)
+	}
+	if schema.ID != "at.anypub.prepare" || schema.ID != xrpc.NSID || schema.Defs["main"].Type != "procedure" {
+		t.Fatalf("published schema and handler disagree: %+v", schema)
+	}
+	mux := http.NewServeMux()
+	mux.Handle("/xrpc/"+xrpc.NSID, xrpc.Handler())
+	r := httptest.NewRequest(http.MethodPost, "/xrpc/at.anypub.prepare", strings.NewReader(`{"operation":"publication","input":{"url":"https://example.com","name":"Publication"}}`))
+	r.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+	mux.ServeHTTP(w, r)
+	if w.Code != http.StatusOK {
+		t.Fatalf("published procedure: %d %s", w.Code, w.Body)
+	}
+}
 
 func call(t *testing.T, body string) *httptest.ResponseRecorder {
 	t.Helper()

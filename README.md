@@ -31,7 +31,7 @@ Mount `xrpc.Handler()` at `/xrpc/` + `xrpc.NSID` in a Go server, or run:
 go run ./cmd/anypubkit
 ```
 
-`PORT` defaults to `8080`. `GET /health` reports readiness. The Lexicon procedure is `POST /xrpc/tech.stygian.anypub.prepare`; its schema is in `lexicons/`. Operations are `publication`, `document`, `article`, `offload`, `replaceOffload`, `live`, and `wrapper`. Requests are limited to 8 MiB and responses use `Cache-Control: no-store`. It receives structured content only and performs no network requests or PDS writes.
+`PORT` defaults to `8080`. `GET /health` reports readiness. The Lexicon procedure is `POST /xrpc/at.anypub.prepare`; its schema is in `lexicons/`. Operations are `publication`, `document`, `article`, `offload`, `replaceOffload`, `live`, and `wrapper`. Requests are limited to 8 MiB and responses use `Cache-Control: no-store`. It receives structured content only and performs no network requests or PDS writes.
 
 ## Browser transport
 
@@ -49,40 +49,40 @@ const publication = await buildPublicationRecord({
 });
 ```
 
-All preparation functions return promises. The default endpoint is the same-origin `/xrpc/tech.stygian.anypub.prepare`; options accept `endpoint`, `signal`, and `fetcher`. Calls omit browser credentials. Social Wire's proxy forwards to its server-only `ANYPUB_API_URL`, pointing to the Go AnyPub backend. Optional properties set explicitly to `undefined` are encoded as `clearFields`, retaining editor clearing behavior across JSON.
+All preparation functions return promises. The default endpoint is the same-origin `/xrpc/at.anypub.prepare`; options accept `endpoint`, `signal`, and `fetcher`. Calls omit browser credentials. Social Wire's proxy forwards to its server-only `ANYPUB_API_URL`, pointing to the Go AnyPub backend. Optional properties set explicitly to `undefined` are encoded as `clearFields`, retaining editor clearing behavior across JSON.
 
 The package exports TypeScript source for Bun/bundlers, with no runtime dependencies. Next.js consumers must include `@stygian/anypub-kit` in `transpilePackages`. There is no local record-construction fallback when the service is unavailable.
 
 ## Publishing the XRPC contract
 
-All seven preparation operations share one procedure, `tech.stygian.anypub.prepare`.
+All seven preparation operations share one procedure, `at.anypub.prepare`.
 The canonical schema ships in the package at
-`@stygian/anypub-kit/lexicons/tech.stygian.anypub.prepare.json`.
+`@stygian/anypub-kit/lexicons/at.anypub.prepare.json`.
 Shipping this file and mounting the HTTP handler do not publish the schema to the AT network.
 
 Follow the [AT Protocol publication guide](https://atproto.com/guides/publishing-lexicons):
 
-1. Select the AT Protocol account that owns this namespace. Configure
-   `_lexicon.anypub.stygian.tech` as a DNS TXT record with `did=<owner-DID>`.
-   The exact authority matters; `_lexicon.stygian.tech` does not cover this namespace.
+1. The owner is `samclemente.me` (`did:plc:qy5pluw2bsuq2x6albsgkvx3`). Configure
+   `_lexicon.anypub.at` as a DNS TXT record with `did=did:plc:qy5pluw2bsuq2x6albsgkvx3`.
+   The exact authority matters; `_lexicon.at` does not cover this namespace.
 2. Authenticate `goat` as that account using `goat account login`.
 3. From this repository, validate and publish the schema:
 
    ```sh
-   goat lex parse lexicons/tech.stygian.anypub.prepare.json
+   goat lex parse lexicons/at.anypub.prepare.json
    goat lex check-dns
    goat lex diff
    goat lex publish
-   goat lex resolve tech.stygian.anypub.prepare
+   goat lex resolve at.anypub.prepare
    ```
 
    Review any existing schema differences before updating a published contract.
    The resulting record is
-   `at://<owner-DID>/com.atproto.lexicon.schema/tech.stygian.anypub.prepare`.
+   `at://did:plc:qy5pluw2bsuq2x6albsgkvx3/com.atproto.lexicon.schema/at.anypub.prepare`.
 4. Deploy the Go service and check the actual consumer-facing API origin:
 
    ```sh
-   curl --fail-with-body "$ANYPUB_API_URL/xrpc/tech.stygian.anypub.prepare" \
+   curl --fail-with-body "$ANYPUB_API_URL/xrpc/at.anypub.prepare" \
      -H 'Content-Type: application/json' \
      --data '{"operation":"publication","input":{"url":"https://example.com","name":"XRPC check"}}'
    ```
