@@ -26,8 +26,11 @@ func TestPublishedProcedureContract(t *testing.T) {
 	if err := json.Unmarshal(data, &schema); err != nil {
 		t.Fatal(err)
 	}
-	if schema.ID != "at.anypub.prepare" || schema.ID != xrpc.NSID || schema.Defs["main"].Type != "procedure" {
+	if schema.ID != "at.anypub.prepare" || schema.Defs["main"].Type != "procedure" {
 		t.Fatalf("published schema and handler disagree: %+v", schema)
+	}
+	if schema.ID != xrpc.NSID {
+		t.Fatalf("handler NSID %q differs from published schema %q", xrpc.NSID, schema.ID)
 	}
 	mux := http.NewServeMux()
 	mux.Handle("/xrpc/"+xrpc.NSID, xrpc.Handler())
